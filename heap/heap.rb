@@ -1,6 +1,6 @@
 class BinaryHeap
   def initialize(dir = :max, heap = [])
-    @heap = heap
+    @heap = heap.dup
     @dir = dir
     heapify_up
   end
