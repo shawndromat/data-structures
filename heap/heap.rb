@@ -1,19 +1,13 @@
 class BinaryHeap
-  def initialize(heap)
-    @heap = heap || []
+  def initialize(dir = :max, heap = [])
+    @heap = heap
+    @dir = dir
+    heapify_up
   end
 
   def <<(val)
     @heap << val
     heapify_up
-  end
-
-  def parent(i)
-    if i % 2 == 0
-      (i / 2) - 1
-    else
-      i / 2
-    end
   end
 
   def pop
@@ -22,9 +16,23 @@ class BinaryHeap
     else
       max = @heap[0]
       @heap[0] = @heap.pop
-      max_heapify_down
+      heapify_down(0)
 
       max
+    end
+  end
+
+  private
+
+  def sym
+    @dir == :max ? ">" : "<"
+  end
+
+  def parent(i)
+    if i % 2 == 0
+      (i / 2) - 1
+    else
+      i / 2
     end
   end
 
@@ -36,25 +44,22 @@ class BinaryHeap
     2 * (i + 1)
   end
 
-  def max_heapify_up
-    (@heap.length - 1).downto(1).each do |idx|
-      parent_idx = self.parent(idx)
-      if @heap[idx] > @heap[parent_idx]
-        @heap[idx], @heap[parent_idx] = @heap[parent_idx], @heap[idx]
-      end
+  def heapify_up
+    (@heap.length/2).downto(0).each do |idx|
+      heapify_down(idx)
     end
   end
 
-  def max_heapify_down
-    current = 0
+  def heapify_down(idx)
+    current = idx
     loop do
       larger = current
       left, right = left(current), right(current)
       
-      if left < @heap.length && (@heap[left] > @heap[current])
+      if left < @heap.length && (@heap[left].send(sym, @heap[current]))
         larger = left
       end
-      if right < @heap.length && (@heap[right] > @heap[larger])
+      if right < @heap.length && (@heap[right].send(sym, @heap[larger]))
         larger = right
       end
 
@@ -66,6 +71,10 @@ class BinaryHeap
   end
 end
 
-b = BinaryHeap.new([5,4,3,2,1])
-p b.remove_parent
-p b
+if __FILE__ == $PROGRAM_NAME
+  b = BinaryHeap.new(:min, [9, 3, 1, 4, 7, 5, 0])
+  p b
+  b.pop
+  b.pop
+  p b
+end
