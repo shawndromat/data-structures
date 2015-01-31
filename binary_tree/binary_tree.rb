@@ -15,44 +15,13 @@ class BinaryTree
     head.preorder
   end
 
-  # def preorder
-  #   p @head.value
-  #   queue = [@head]
-  #   rights = []
-  #   until queue.empty?
-  #     curr = queue.shift
-  #     p curr.value
-  #     if curr.left
-  #       queue.push(curr.left)
-  #       rights.push(curr)
-  #     else
-  #       queue.push(rights.pop.right) if rights.length > 0
-  #     end
-  #   end
-  # end
+  def postorder_recur
+    head.postorder
+  end
 
-
-  # def preorder
-  #   lefts = [@head]
-  #   rights = []
-  #   until lefts.empty? && rights.empty?
-  #     if lefts.empty?
-  #       curr = rights.pop
-  #       if curr.right
-  #         lefts.push(curr.right)
-  #       end
-  #     else
-  #       curr = lefts.shift
-  #       p curr.value
-  #       if curr.left
-  #         rights.push(curr) # => ['f', 'b']
-  #         lefts.push(curr.left) # => []
-  #       elsif curr.right
-  #         lefts.push(curr.right)
-  #       end
-  #     end
-  #   end
-  # end
+  def inorder_recur
+    head.inorder
+  end
 
   def preorder
     stack = [@head]

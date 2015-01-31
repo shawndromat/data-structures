@@ -29,4 +29,16 @@ class BinaryTreeNode
     left.preorder if left
     right.preorder if right
   end
+
+  def postorder
+    left.postorder if left
+    right.postorder if right
+    p @value
+  end
+
+  def inorder
+    left.inorder if left
+    p @value
+    right.inorder if right
+  end
 end
