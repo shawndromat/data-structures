@@ -11,7 +11,6 @@ class BinaryTreeNode
   def add_child(val)
     if val < @value
       @left ? @left.add_child(val) : @left = BinaryTreeNode.new(val)
-      p @left
     else
       @right ? @right.add_child(val) : @right = BinaryTreeNode.new(val)
     end
@@ -19,8 +18,8 @@ class BinaryTreeNode
 
   def inspect
     string = ["val: #{@value}"]
-    string.push("left: #{@left.inspect}") if @left
-    string.push("right: #{@right.inspect}") if @right
+    string.push("left: #{@left.value}") if @left
+    string.push("right: #{@right.value}") if @right
     string.join(", ")
   end
 

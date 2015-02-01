@@ -2,12 +2,12 @@ class BinaryHeap
   def initialize(dir = :max, heap = [])
     @heap = heap.dup
     @dir = dir
-    heapify_up
+    build_heap
   end
 
   def <<(val)
     @heap << val
-    heapify_up
+    heapify_up(@heap.length - 1)
   end
 
   def pop
@@ -20,6 +20,10 @@ class BinaryHeap
 
       max
     end
+  end
+
+  def node
+    @heap[0]
   end
 
   private
@@ -44,9 +48,17 @@ class BinaryHeap
     2 * (i + 1)
   end
 
-  def heapify_up
+  def build_heap
     (@heap.length/2).downto(0).each do |idx|
       heapify_down(idx)
+    end
+  end
+
+  def heapify_up(i)
+    current = i
+    while parent(current) >= 0 && (@heap[current].send(sym, @heap[parent(current)]))
+      @heap[parent(current)], @heap[current] = @heap[current], @heap[parent(current)]
+      current = parent(current)
     end
   end
 
@@ -72,9 +84,8 @@ class BinaryHeap
 end
 
 if __FILE__ == $PROGRAM_NAME
-  b = BinaryHeap.new(:min, [9, 3, 1, 4, 7, 5, 0])
+  b = BinaryHeap.new(:max, [9, 3, 1, 4, 7, 5, 0])
   p b
-  b.pop
-  b.pop
+  b << 10
   p b
 end
